@@ -1152,6 +1152,8 @@ static AstModule* process_module(AstNode *ast, bool defer, AstNode *original_ast
 void AST::process(RTLIL::Design *design, AstNode *ast, bool dump_ast1, bool dump_ast2, bool no_dump_ptr, bool dump_vlog1, bool dump_vlog2, bool dump_rtlil,
 		bool nolatches, bool nomeminit, bool nomem2reg, bool mem2reg, bool noblackbox, bool lib, bool nowb, bool noopt, bool icells, bool pwires, bool nooverwrite, bool overwrite, bool defer, bool autowire)
 {
+	log("call process\n");
+
 	current_ast = ast;
 	flag_dump_ast1 = dump_ast1;
 	flag_dump_ast2 = dump_ast2;
@@ -1319,6 +1321,8 @@ void AST::explode_interface_port(AstNode *module_ast, RTLIL::Module * intfmodule
 // from AST. The interface members are copied into the AST module with the prefix of the interface.
 void AstModule::reprocess_module(RTLIL::Design *design, dict<RTLIL::IdString, RTLIL::Module*> local_interfaces)
 {
+	log("call reproccess_module\n");
+
 	loadconfig();
 
 	bool is_top = false;
@@ -1407,6 +1411,8 @@ void AstModule::reprocess_module(RTLIL::Design *design, dict<RTLIL::IdString, RT
 // This method is used to explode the interface when the interface is a port of the module (not instantiated inside)
 RTLIL::IdString AstModule::derive(RTLIL::Design *design, dict<RTLIL::IdString, RTLIL::Const> parameters, dict<RTLIL::IdString, RTLIL::Module*> interfaces, dict<RTLIL::IdString, RTLIL::IdString> modports, bool /*mayfail*/)
 {
+	log("call derice\n");
+
 	AstNode *new_ast = NULL;
 	std::string modname = derive_common(design, parameters, &new_ast);
 
@@ -1486,6 +1492,8 @@ RTLIL::IdString AstModule::derive(RTLIL::Design *design, dict<RTLIL::IdString, R
 // create a new parametric module (when needed) and return the name of the generated module - without support for interfaces
 RTLIL::IdString AstModule::derive(RTLIL::Design *design, dict<RTLIL::IdString, RTLIL::Const> parameters, bool /*mayfail*/)
 {
+	log("call another derive\n");
+
 	bool quiet = lib || attributes.count(ID(blackbox)) || attributes.count(ID(whitebox));
 
 	AstNode *new_ast = NULL;
